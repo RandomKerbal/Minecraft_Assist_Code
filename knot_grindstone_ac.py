@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     for state in states:
         for state2 in states2:
-            if not ((state == 'standing' and state2 in ('0', '2', '3',)) or (state == 'hanging' and state2 in ('2', '3',))):
+            if not (state == 'standing' and state2 == '0'):
                 output = ''
                 output += r'"/execute at @s if block ~~~ grindstone [\"attachment\"=\"'
                 output += state
@@ -23,7 +23,7 @@ if __name__ == "__main__":
                 output += state2
                 output += '] run event entity @s is_'
                 output += state
-                output += state2
+                output += state2 if state == 'side' else str(int(state2) % 2)
                 output += '",'
                 print(output)
         print()
