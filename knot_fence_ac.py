@@ -1,5 +1,5 @@
 variants = ('fence', 'mangrove_fence', 'cherry_fence', 'pale_oak_fence', 'bamboo_fence', 'crimson_fence', 'warped_fence', 'nether_brick_fence')
-adjs = ('~1~~', '~-1~~', '~~~1', '~~~-1', '~~1~', '~~-1~')
+adjs = ('~1~~', '~-1~~', '~~~1', '~~~-1', '~~1~', '~~-1.5~')
 
 if __name__ == "__main__":
     for adj in adjs:

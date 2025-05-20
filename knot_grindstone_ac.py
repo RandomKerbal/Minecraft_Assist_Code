@@ -1,4 +1,4 @@
-from knot_fence_ac import adjs
+adjs = ('~1~~', '~-1~~', '~~~1', '~~~-1', '~~1~', '~~-1~')
 states = ('standing', 'side', 'hanging')
 states2 = ('0', '1', '2', '3',)
 
