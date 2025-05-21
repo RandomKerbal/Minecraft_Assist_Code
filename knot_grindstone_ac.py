@@ -11,9 +11,12 @@ if __name__ == "__main__":
         output += adj
         output += ' 0 0"'
         print(output)
+
     print()
 
     for state in states:
+        print()
+
         for state2 in states2:
             if not (state == 'standing' and state2 == '0'):
                 output = ''
@@ -26,4 +29,3 @@ if __name__ == "__main__":
                 output += state2 if state == 'side' else str(int(state2) % 2)
                 output += '",'
                 print(output)
-        print()
