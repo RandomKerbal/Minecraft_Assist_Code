@@ -3,7 +3,7 @@ from dfence_entity_bp import variants
 
 if __name__ == "__main__":
     for var in variants:
-        filename = f'.json'
+        filename = f'dfence_{var}.rec.json'
         with open(f'D:\\My Downloads\\dfence_recipes\\{filename}', 'w') as f:
             data = f'''
 #
@@ -21,13 +21,13 @@ if __name__ == "__main__":
     ],
     "key":#
       "P":#
-        "item": "minecraft:{('planks:' + str(variants.index(var))) if variants.index(var) <= 5 else ('nether_brick' if var == 'nether_brick' else (var + '_planks'))}"
+        "item": "minecraft:{('planks:' + str(variants.index(var))) if variants.index(var) <= 5 else ('netherbrick' if var == 'nether_brick' else (var + '_planks'))}"
       ##
     ##,
     "result":#
       "item": "minecraft:spawn_egg",
       "data": "query.get_actor_info_id('rk:dfence_{var}')",
-      "count": 2
+      "count": {'1' if var == 'nether_brick' else '2'}
     ##
   ##
 ##
