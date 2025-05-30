@@ -49,10 +49,12 @@ if __name__ == "__main__":
       ##,
       "scripts":#
         "animate":[
+          "facing",
           "spawn_despawn"
         ]
       ##,
       "animations":#
+        "facing": "animation.entity_block.facing",
         "spawn_despawn": "controller.animation.entity_block.spawn_despawn"
       ##,
       "particle_effects":#
