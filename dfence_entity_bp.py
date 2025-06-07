@@ -16,26 +16,41 @@ if __name__ == "__main__":
         "is_summonable":true,
         "is_experimental":false,
         "animations":#
-           "facing":"controller.animation.dfence.facing",
-           "collision":"controller.animation.entity_block.collision"
+           "facing":"controller.animation.dfence.facing"
         ##,
         "scripts":#
            "animate":[
-              "facing",
-              "collision"
+              "facing"
            ]
         ##
      ##,
      "component_groups":#
-        "horizontal":#
+        "horizontal0":#
            "minecraft:variant":#
               "value":0
-           ##
+           ##,
+            "minecraft:collision_box":#
+               "height":0.9,
+               "width":0.5
+            ##
         ##,
-        "vertical":#
+        "horizontal1":#
            "minecraft:variant":#
               "value":1
-           ##
+           ##,
+            "minecraft:collision_box":#
+               "height":0.9,
+               "width":0.5
+            ##
+        ##,
+        "vertical0":#
+           "minecraft:variant":#
+              "value":10
+           ##,
+            "minecraft:collision_box":#
+               "height":0.9,
+               "width":0.5
+            ##
         ##,
         "pick_up":#
            "minecraft:transformation":#
@@ -111,10 +126,6 @@ if __name__ == "__main__":
            ]
         ##,
         "minecraft:fire_immune":true,
-        "minecraft:collision_box":#
-           "height":1.0,
-           "width":1.0
-        ##,
         "minecraft:physics":#
            "has_collision":false,
            "has_gravity":false
@@ -128,17 +139,24 @@ if __name__ == "__main__":
         ##
      ##,
      "events":#
-        "horizontal":#
+        "horizontal0":#
            "add":#
               "component_groups":[
-                 "horizontal"
+                 "horizontal0"
               ]
            ##
         ##,
-        "vertical":#
+        "horizontal1":#
            "add":#
               "component_groups":[
-                 "vertical"
+                 "horizontal1"
+              ]
+           ##
+        ##,
+        "vertical0":#
+           "add":#
+              "component_groups":[
+                 "vertical0"
               ]
            ##
         ##,
@@ -167,7 +185,6 @@ if __name__ == "__main__":
             try:
                 data = json.loads(data)
             except json.JSONDecodeError as e:
-                print("Invalid JSON:", e)
                 raise
             data = json.dumps(data, indent=2)
 

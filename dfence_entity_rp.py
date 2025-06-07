@@ -40,8 +40,8 @@ if __name__ == "__main__":
         "default": "textures/blocks/{textures[var] if var in textures else 'planks_' + var}"
       ##,
       "geometry":#
-        "horizontal": "geometry.dfence_horizontal",
-        "vertical": "geometry.dfence_vertical"
+        "horizontal": "geometry.dfence.horizontal",
+        "vertical": "geometry.dfence.vertical"
       ##,
       "spawn_egg":#
         "texture": "rk:dfence_{var}",
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         ]
       ##,
       "animations":#
-        "facing": "animation.entity_block.facing",
+        "facing": "animation.dfence.facing",
         "spawn_despawn": "controller.animation.entity_block.spawn_despawn"
       ##,
       "particle_effects":#

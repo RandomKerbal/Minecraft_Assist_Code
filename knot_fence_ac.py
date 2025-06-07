@@ -1,6 +1,6 @@
 variants = ('fence', 'mangrove_fence', 'cherry_fence', 'bamboo_fence', 'crimson_fence', 'warped_fence', 'nether_brick_fence', 'pale_oak_fence')
 adjs = ('~1~~', '~-1~~', '~~~1', '~~~-1', '~~1~', '~~-1~')
-tag = 'NoFence_if_dirPOS_else_HasFence'
+tag = 'NoFence_if_odd_else_HasFence'
 
 if __name__ == "__main__":
     for adj in adjs:
