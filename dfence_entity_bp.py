@@ -16,13 +16,11 @@ if __name__ == "__main__":
         "is_summonable":true,
         "is_experimental":false,
         "animations":#
-           "facing":"controller.animation.dfence.facing",
-           "update": "animation.dfence.update"
+           "facing":"controller.animation.dfence.facing"
         ##,
         "scripts":#
            "animate":[
-              "facing",
-              "update"
+              "facing"
            ]
         ##
      ##,

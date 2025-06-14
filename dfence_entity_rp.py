@@ -51,7 +51,6 @@ if __name__ == "__main__":
       ##,
       "scripts":#
         "animate":[
-          "hide",
           "facing",
           "spawn_despawn"
         ],
@@ -61,7 +60,6 @@ if __name__ == "__main__":
         ]
       ##,
       "animations":#
-        "hide": "animation.dfence.hide",
         "facing": "animation.dfence.facing",
         "spawn_despawn": "controller.animation.entity_block.spawn_despawn"
       ##,
