@@ -2,7 +2,7 @@ import json
 from dfence_entity_bp import variants
 
 if __name__ == "__main__":
-    with open('D:\\My Downloads\\dfence_rp\\item_texture.json', 'w') as f:
+    with open('D:\\My Downloads\\dfence_items_texture\\item_texture.json', 'w') as f:
         data = '#"resource_pack_name":"dfence","texture_name":"atlas.items","texture_data":#'
         for var in variants:
             data += f'"rk:dfence_{var}":#"textures":"textures/items/dfence_{var}"##,'
