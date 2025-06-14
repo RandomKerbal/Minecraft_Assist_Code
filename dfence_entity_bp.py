@@ -156,6 +156,24 @@ if __name__ == "__main__":
                  ##,
                  "cause":"temperature",
                  "damage_per_tick":4
+              ##,
+              #
+                "filters": #
+                  "any_of": [
+                    #
+                      "test": "is_moving",
+                      "subject": "self",
+                      "value": true
+                    ##,
+                    #
+                      "test": "is_riding",
+                      "subject": "self",
+                      "value": true
+                    ##
+                  ]
+                ##,
+                "cause": "temperature",
+                "damage_per_tick": 9999
               ##
            ]
         ##,
