@@ -25,32 +25,15 @@ if __name__ == "__main__":
         ##
      ##,
      "component_groups":#
-        "horizontal0":#
+        "horizontal":#
            "minecraft:variant":#
               "value":0
-           ##,
-            "minecraft:collision_box":#
-               "height":0.9,
-               "width":0.5
-            ##
+           ##
         ##,
-        "horizontal1":#
+        "vertical":#
            "minecraft:variant":#
               "value":1
-           ##,
-            "minecraft:collision_box":#
-               "height":0.9,
-               "width":0.5
-            ##
-        ##,
-        "vertical0":#
-           "minecraft:variant":#
-              "value":10
-           ##,
-            "minecraft:collision_box":#
-               "height":0.9,
-               "width":0.5
-            ##
+           ##
         ##,
         "pick_up":#
            "minecraft:transformation":#
@@ -89,6 +72,10 @@ if __name__ == "__main__":
               "dfence"
            ]
         ##,
+        "minecraft:health":#
+           "value":10,
+           "max":10
+        ##,
         "minecraft:damage_sensor":#
            "triggers":[
               #
@@ -96,9 +83,19 @@ if __name__ == "__main__":
                     "filters":#
                        "any_of":[
                           #
-                             "test":"has_damage",
-                             "subject":"self",
-                             "value":"fatal"
+                             "all_of":[
+                                #
+                                   "test":"has_damage",
+                                   "subject":"self",
+                                   "value":"fatal"
+                                ##,
+                                #
+                                   "test":"has_component",
+                                   "subject":"self",
+                                   "operator":"!=",
+                                   "value":"minecraft:transformation"
+                                ##
+                             ]
                           ##,
                           #
                              "all_of":[
@@ -119,13 +116,54 @@ if __name__ == "__main__":
                  ##,
                  "deals_damage":false
               ##,
+              {'''
+              #
+                 "cause":"temperature",
+                 "deals_damage":true
+              ##,
+              ''' if var not in fire_immune else ''}
+              #
+                 "cause":"fire",
+                 "deals_damage":false
+              ##,
               #
                  "cause":"all",
                  "deals_damage":false
               ##
            ]
         ##,
-        "minecraft:fire_immune":true,
+        {'''
+        "minecraft:hurt_on_condition":#
+           "damage_conditions":[
+              #
+                 "filters":#
+                    "any_of":[
+                       #
+                          "test":"in_block",
+                          "subject":"self",
+                          "value":"minecraft:fire"
+                       ##
+                    ]
+                 ##,
+                 "cause":"temperature",
+                 "damage_per_tick":1
+              ##,
+              #
+                 "filters":#
+                      "test":"in_lava",
+                      "subject":"self",
+                      "value":true
+                 ##,
+                 "cause":"temperature",
+                 "damage_per_tick":4
+              ##
+           ]
+        ##,
+        ''' if var not in fire_immune else ''}
+        "minecraft:collision_box":#
+           "height":0.25,
+           "width":0.25
+        ##,
         "minecraft:physics":#
            "has_collision":false,
            "has_gravity":false
@@ -139,24 +177,17 @@ if __name__ == "__main__":
         ##
      ##,
      "events":#
-        "horizontal0":#
+        "horizontal":#
            "add":#
               "component_groups":[
-                 "horizontal0"
+                 "horizontal"
               ]
            ##
         ##,
-        "horizontal1":#
+        "vertical":#
            "add":#
               "component_groups":[
-                 "horizontal1"
-              ]
-           ##
-        ##,
-        "vertical0":#
-           "add":#
-              "component_groups":[
-                 "vertical0"
+                 "vertical"
               ]
            ##
         ##,
