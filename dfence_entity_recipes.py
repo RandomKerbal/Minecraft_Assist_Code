@@ -3,8 +3,9 @@ from dfence_entity_bp import variants
 
 if __name__ == "__main__":
     for var in variants:
+        filepath = 'D:\\My Downloads\\dfence_recipes\\'
         filename = f'dfence_{var}.rec.json'
-        with open(f'D:\\My Downloads\\dfence_recipes\\{filename}', 'w') as f:
+        with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
   "format_version": "1.13",
@@ -45,4 +46,4 @@ if __name__ == "__main__":
 
             print(data, end='\n\n')
             f.write(data)
-    print('All data saved in D:\\My Downloads\\dfence_recipes')
+    print(f'All data saved in {filepath}')

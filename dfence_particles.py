@@ -4,8 +4,9 @@ from dfence_entity_rp import textures
 
 if __name__ == "__main__":
     for var in variants:
+        filepath = 'D:\\My Downloads\\dfence_particles\\'
         filename = f'{var}_break.particle.json'
-        with open(f'D:\\My Downloads\\dfence_particles\\{filename}', 'w') as f:
+        with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
   "format_version": "1.10.0",
@@ -99,4 +100,4 @@ if __name__ == "__main__":
 
             print(data, end='\n\n')
             f.write(data)
-    print('All data saved in D:\\My Downloads\\dfence_particles')
+    print(f'All data saved in {filepath}')

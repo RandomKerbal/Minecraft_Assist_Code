@@ -19,7 +19,8 @@ print(langs, end='\n\n')
 
 if __name__ == "__main__":
     for lang, (lang_vars, dfence) in langs.items():
-        with open(f'D:\\My Downloads\\dfence_texts\\{lang}', 'w', encoding='utf-8') as f:
+        filepath = 'D:\\My Downloads\\dfence_texts\\'
+        with open(f'{filepath}{lang}', 'w', encoding='utf-8') as f:
             data = ''
             for i, var in enumerate(lang_vars):
                 data += f'item.spawn_egg.entity.rk:dfence_{variants[i]}.name={var} {dfence}\n'
@@ -33,4 +34,4 @@ if __name__ == "__main__":
 
             print(data)
             f.write(data)
-    print('All data saved in D:\\My Downloads\\dfence_texts')
+    print(f'All data saved in {filepath}')

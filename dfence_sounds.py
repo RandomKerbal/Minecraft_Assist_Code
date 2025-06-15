@@ -1,11 +1,20 @@
 import json
 from dfence_entity_bp import variants
+sounds_hurt = {
+    'cherry': 'cherry_wood',
+    'bamboo': 'bamboo_wood',
+    'crimson': 'nether_wood',
+    'warped': 'nether_wood',
+    'nether_brick': 'nether_brick'
+}
 
 if __name__ == "__main__":
-    with open('D:\\My Downloads\\dfence_rp\\sounds.json', 'w') as f:
+    filepath = 'D:\\My Downloads\\dfence_rp\\'
+    with open(f'{filepath}sounds.json', 'w') as f:
         data = '#"entity_sounds":#"entities":#'
         for var in variants:
-            data += f'"rk:dfence_{var}":#"volume": 0.0,"events":#"death":""####,'
+            sound_hurt = f"hit.{sounds_hurt[var] if var in sounds_hurt else 'wood'}"
+            data += f'"rk:dfence_{var}":#"volume": 1.0,"events":#"hurt": "{sound_hurt}","hurt.in.water":#"sound": "{sound_hurt}","volume": 0.8,"pitch": [ 0.5, 0.8 ]##,"death":""####,'
 
         data = data[:-1]  # removes comma at the end
         data += '######'
@@ -23,4 +32,4 @@ if __name__ == "__main__":
 
         print(data, end='\n\n')
         f.write(data)
-    print('All data saved in D:\\My Downloads\\dfence_rp')
+    print(f'All data saved in {filepath}')

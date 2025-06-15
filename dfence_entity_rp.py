@@ -25,8 +25,9 @@ sounds_despawn = {
 
 if __name__ == "__main__":
     for var in variants:
+        filepath = 'D:\\My Downloads\\dfence_rp\\'
         filename = f'dfence_{var}.json'
-        with open(f'D:\\My Downloads\\dfence_rp\\{filename}', 'w') as f:
+        with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
   "format_version": "1.10.0",
@@ -91,4 +92,4 @@ if __name__ == "__main__":
 
             print(data, end='\n\n')
             f.write(data)
-    print('All data saved in D:\\My Downloads\\dfence_rp')
+    print(f'All data saved in {filepath}')
