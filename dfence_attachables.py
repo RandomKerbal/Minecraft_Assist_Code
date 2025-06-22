@@ -22,7 +22,7 @@ if __name__ == "__main__":
         "enchanted": "textures/misc/enchanted_item_glint" 
       ##,
       "geometry":#
-        "default": "geometry.dfence_egg"
+        "default": "geometry.dfence.egg"
       ##,
       "scripts": #
         "animate": [
@@ -31,14 +31,12 @@ if __name__ == "__main__":
           ##,
           #
             "hold_third_person": "context.is_first_person == 0.0"
-          ##,
-          "cycle_vars"
+          ##
         ]
       ##,
       "animations": #
-        "hold_first_person": "animation.dfence_egg.holding",
-        "hold_third_person": "animation.dfence_egg.default",
-        "cycle_vars": "animation.dfence_egg.cycle_vars"
+        "hold_first_person": "animation.dfence.egg.hold_first_person",
+        "hold_third_person": "animation.dfence.egg.hold_third_person"
       ##,
       "render_controllers": [
         "controller.render.item_default"

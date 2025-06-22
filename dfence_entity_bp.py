@@ -179,9 +179,22 @@ if __name__ == "__main__":
            ]
         ##,
         ''' if var not in fire_immune else ''}
-        "minecraft:collision_box":#
-           "height":0.25,
-           "width":0.25
+        "minecraft:collision_box": #
+                "height": 0.0,
+                "width": 0.0
+              ##,
+        "minecraft:custom_hit_test": #
+          "hitboxes": [
+            #
+              "width": 0.25,
+              "height": 0.25,
+              "pivot": [
+                0,
+                0.125,
+                0
+              ]
+            ##
+          ]
         ##,
         "minecraft:physics":#
            "has_collision":false,
