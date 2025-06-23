@@ -24,18 +24,3 @@ if __name__ == "__main__":
 
         print(f'"/execute at @s if block {adj} {variants[-1]} run tag @s {remove} {tag}",')
         print(f'"/tp @s[tag={NOT}{tag}] {adj} 0 0",')
-
-
-# for adj in adjs:
-#     print()
-#
-#     for var in variants:
-#         output = ''
-#         output += '"/execute at @s if block '
-#         output += adj
-#         output += ' '
-#         output += var
-#         output += ' run tp @s '
-#         output += adj
-#         output += ' 0 0",'
-#         print(output)
