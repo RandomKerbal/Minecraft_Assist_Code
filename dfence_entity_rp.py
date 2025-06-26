@@ -1,26 +1,27 @@
 import json
 from dfence_entity_bp import variants
+
 textures = {
-    'dark_oak':'planks_big_oak',
-    'mangrove':'mangrove_planks',
-    'cherry':'cherry_planks',
-    'pale_oak':'pale_oak_planks',
-    'bamboo':'bamboo_planks',
-    'crimson':'huge_fungus/crimson_planks',
-    'warped':'huge_fungus/warped_planks',
-    'nether_brick':'nether_brick'
+    'dark_oak': 'planks_big_oak',
+    'mangrove': 'mangrove_planks',
+    'cherry': 'cherry_planks',
+    'pale_oak': 'pale_oak_planks',
+    'bamboo': 'bamboo_planks',
+    'crimson': 'huge_fungus/crimson_planks',
+    'warped': 'huge_fungus/warped_planks',
+    'nether_brick': 'nether_brick'
 }
 sounds_spawn = {
-    'cherry':'place.cherry_wood',
-    'bamboo':'place.bamboo_wood',
-    'crimson':'place.nether_wood',
-    'warped':'place.nether_wood'
+    'cherry': 'place.cherry_wood',
+    'bamboo': 'place.bamboo_wood',
+    'crimson': 'place.nether_wood',
+    'warped': 'place.nether_wood'
 }
 sounds_despawn = {
-    'cherry':'break.cherry_wood',
-    'bamboo':'break.bamboo_wood',
-    'crimson':'break.nether_wood',
-    'warped':'break.nether_wood'
+    'cherry': 'break.cherry_wood',
+    'bamboo': 'break.bamboo_wood',
+    'crimson': 'break.nether_wood',
+    'warped': 'break.nether_wood'
 }
 
 if __name__ == "__main__":
