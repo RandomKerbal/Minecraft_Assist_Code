@@ -1,5 +1,6 @@
 import json
 from dfence_entity_bp import variants
+
 sounds_hurt = {
     'cherry': 'cherry_wood',
     'bamboo': 'bamboo_wood',
@@ -14,7 +15,7 @@ if __name__ == "__main__":
         data = '#"entity_sounds":#"entities":#'
         for var in variants:
             sound_hurt = f"hit.{sounds_hurt[var] if var in sounds_hurt else 'wood'}"
-            data += f'"rk:dfence_{var}":#"volume": 1.0,"events":#"hurt": "{sound_hurt}","hurt.in.water":#"sound": "{sound_hurt}","volume": 0.8,"pitch": [ 0.5, 0.8 ]##,"death":""####,'
+            data += f'"rk:dfence_{var}":#"volume":1.0,"pitch":[0.8,1.2],"events":#"hurt":"{sound_hurt}","hurt.in.water":#"sound":"{sound_hurt}","volume":0.8,"pitch":[0.4,0.8]##,"death":""####,'
 
         data = data[:-1]  # removes comma at the end
         data += '######'

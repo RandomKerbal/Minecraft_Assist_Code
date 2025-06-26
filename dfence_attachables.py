@@ -9,36 +9,36 @@ if __name__ == "__main__":
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
-  "format_version": "1.10.0",
-  "minecraft:attachable": #
-    "description": #
-      "identifier": "rk:dfence_{var}_spawn_egg",
-      "materials": #
-        "default": "entity",
-        "enchanted": "entity_alphatest_glint"
+  "format_version":"1.10.0",
+  "minecraft:attachable":#
+    "description":#
+      "identifier":"rk:dfence_{var}_spawn_egg",
+      "materials":#
+        "default":"entity",
+        "enchanted":"entity_alphatest_glint"
       ##,
       "textures":#
-        "default": "textures/blocks/{textures[var] if var in textures else 'planks_' + var}",
-        "enchanted": "textures/misc/enchanted_item_glint" 
+        "default":"textures/blocks/{textures[var] if var in textures else 'planks_' + var}",
+        "enchanted":"textures/misc/enchanted_item_glint" 
       ##,
       "geometry":#
-        "default": "geometry.dfence.egg"
+        "default":"geometry.dfence.egg"
       ##,
-      "scripts": #
-        "animate": [
+      "scripts":#
+        "animate":[
           #
-            "hold_first_person": "context.is_first_person == 1.0"
+            "hold_first_person":"context.is_first_person == 1.0"
           ##,
           #
-            "hold_third_person": "context.is_first_person == 0.0"
+            "hold_third_person":"context.is_first_person == 0.0"
           ##
         ]
       ##,
-      "animations": #
-        "hold_first_person": "animation.dfence.egg.hold_first_person",
-        "hold_third_person": "animation.dfence.egg.hold_third_person"
+      "animations":#
+        "hold_first_person":"animation.dfence.egg.hold_first_person",
+        "hold_third_person":"animation.dfence.egg.hold_third_person"
       ##,
-      "render_controllers": [
+      "render_controllers":[
         "controller.render.item_default"
       ]
     ##

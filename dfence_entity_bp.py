@@ -36,6 +36,19 @@ if __name__ == "__main__":
               "value":1
            ##
         ##,
+        "pre_pick_up":#
+          "minecraft:spell_effects":#
+            "add_effects":[
+              #
+                "effect":"blindness",
+                "amplifier":-1,
+                "visible":false,
+                "ambient":false,
+                "duration":0.5
+              ##
+            ]
+          ##
+        ##,
         "pick_up":#
            "minecraft:transformation":#
               "into":"rk:dfence_{var}<despawn>",
@@ -80,56 +93,78 @@ if __name__ == "__main__":
         "minecraft:damage_sensor":#
            "triggers":[
               #
-                 "on_damage":#
-                    "filters":#
-                       "any_of":[
+                "on_damage":#
+                  "filters":#
+                    "any_of":[
+                      #
+                        "all_of":[
                           #
-                             "all_of":[
-                                #
-                                   "test":"has_damage",
-                                   "subject":"self",
-                                   "value":"fatal"
-                                ##,
-                                #
-                                   "test":"has_component",
-                                   "subject":"self",
-                                   "operator":"!=",
-                                   "value":"minecraft:transformation"
-                                ##
-                             ]
+                            "test":"has_damage",
+                            "subject":"self",
+                            "value":"fatal"
                           ##,
                           #
-                             "all_of":[
-                                #
-                                   "test":"is_sneaking",
-                                   "subject":"other"
-                                ##,
-                                #
-                                   "test":"is_family",
-                                   "subject":"other",
-                                   "value":"player"
-                                ##
-                             ]
+                            "test":"has_component",
+                            "subject":"self",
+                            "operator":"!=",
+                            "value":"minecraft:transformation"
                           ##
-                       ]
-                    ##,
-                    "event":"pick_up"
-                 ##,
-                 "deals_damage":false
+                        ]
+                      ##,
+                      #
+                        "all_of":[
+                          #
+                            "test":"has_mob_effect",
+                            "subject":"self",
+                            "value":"blindness"
+                          ##,
+                          #
+                            "test":"is_family",
+                            "subject":"other",
+                            "value":"player"
+                          ##
+                        ]
+                      ##
+                    ]
+                  ##,
+                  "event":"pick_up"
+                ##,
+                "damage_modifier": -9999
+              ##,
+              #
+                "on_damage":#
+                  "filters":#
+                      "all_of":[
+                          #
+                            "test":"has_mob_effect",
+                            "subject":"self",
+                            "operator":"!=",
+                            "value":"blindness"
+                          ##,
+                          #
+                            "test":"is_family",
+                            "subject":"other",
+                            "value":"player"
+                          ##
+                        ]
+                  ##,
+                  "event":"pre_pick_up"
+                ##,
+                "damage_modifier": -9999
               ##,
               {'''
               #
-                 "cause":"temperature",
-                 "deals_damage":true
+                "cause":"temperature",
+                "deals_damage":true
               ##,
               ''' if var not in fire_immune else ''}
               #
-                 "cause":"fire",
-                 "deals_damage":false
+                "cause":"fire",
+                "deals_damage":false
               ##,
               #
-                 "cause":"all",
-                 "deals_damage":false
+                "cause":"all",
+                "deals_damage":false
               ##
            ]
         ##,
@@ -159,36 +194,36 @@ if __name__ == "__main__":
                  "damage_per_tick":4
               ##,
               #
-                "filters": #
-                  "any_of": [
+                "filters":#
+                  "any_of":[
                     #
-                      "test": "is_moving",
-                      "subject": "self",
-                      "value": true
+                      "test":"is_moving",
+                      "subject":"self",
+                      "value":true
                     ##,
                     #
-                      "test": "is_riding",
-                      "subject": "self",
-                      "value": true
+                      "test":"is_riding",
+                      "subject":"self",
+                      "value":true
                     ##
                   ]
                 ##,
-                "cause": "temperature",
-                "damage_per_tick": 9999
+                "cause":"temperature",
+                "damage_per_tick":9999
               ##
            ]
         ##,
         ''' if var not in fire_immune else ''}
-        "minecraft:collision_box": #
-                "height": 0.0,
-                "width": 0.0
-              ##,
-        "minecraft:custom_hit_test": #
-          "hitboxes": [
+        "minecraft:collision_box":#
+            "height":0.0,
+            "width":0.0
+        ##,
+        "minecraft:custom_hit_test":#
+          "hitboxes":[
             #
-              "width": 0.25,
-              "height": 0.25,
-              "pivot": [
+              "width":0.25,
+              "height":0.25,
+              "pivot":[
                 0,
                 0.125,
                 0
@@ -220,6 +255,13 @@ if __name__ == "__main__":
            "add":#
               "component_groups":[
                  "vertical"
+              ]
+           ##
+        ##,
+        "pre_pick_up":#
+           "add":#
+              "component_groups":[
+                 "pre_pick_up"
               ]
            ##
         ##,

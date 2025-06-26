@@ -8,27 +8,27 @@ if __name__ == "__main__":
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
-  "format_version": "1.13",
+  "format_version":"1.13",
   "minecraft:recipe_shaped":#
     "description":#
-    "identifier": "rk:dfence_{var}"
+    "identifier":"rk:dfence_{var}"
     ##,
-    "tags": [
+    "tags":[
       "crafting_table"
     ],
-    "pattern": [
+    "pattern":[
       " P",
       "P "
     ],
     "key":#
       "P":#
-        "item": "minecraft:{('planks:' + str(variants.index(var))) if variants.index(var) <= 5 else ('netherbrick' if var == 'nether_brick' else (var + '_planks'))}"
+        "item":"minecraft:{('planks:' + str(variants.index(var))) if variants.index(var) <= 5 else ('netherbrick' if var == 'nether_brick' else (var + '_planks'))}"
       ##
     ##,
     "result":#
-      "item": "minecraft:spawn_egg",
-      "data": "query.get_actor_info_id('rk:dfence_{var}')",
-      "count": {'1' if var == 'nether_brick' else '2'}
+      "item":"minecraft:spawn_egg",
+      "data":"query.get_actor_info_id('rk:dfence_{var}')",
+      "count":{'1' if var == 'nether_brick' else '2'}
     ##
   ##
 ##
