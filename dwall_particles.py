@@ -1,13 +1,15 @@
 import json
-from dfence_entity_bp import variants
-from dfence_entity_rp import textures
+from dfence_entity_bp import variants as dfence_vars
+from dwall_entity_bp import variants as dwall_variants
+from dwall_entity_rp import textures
 
 if __name__ == "__main__":
-    for var in variants:
-        filepath = 'D:\\My Downloads\\dfence_particles\\'
-        filename = f'{var}_break.particle.json'
-        with open(f'{filepath}{filename}', 'w') as f:
-            data = f'''
+    for var in dwall_variants:
+        if var not in dfence_vars:
+            filepath = 'D:\\My Downloads\\dwall_particles\\'
+            filename = f'{var}_break.particle.json'
+            with open(f'{filepath}{filename}', 'w') as f:
+                data = f'''
 #
   "format_version":"1.10.0",
   "particle_effect":#
@@ -15,7 +17,7 @@ if __name__ == "__main__":
       "identifier":"rk:{var}_break_particle",
       "basic_render_parameters":#
         "material":"particles_alpha",
-        "texture":"textures/blocks/{textures[var] if var in textures else 'planks_' + var}"
+        "texture":"textures/blocks/{'deepslate/' if 'deepslate' in var else ''}{textures[var] if var in textures else var}"
       ##
     ##,
     "components":#
@@ -78,18 +80,18 @@ if __name__ == "__main__":
     ##
   ##
 ##
-            '''
-            # swap # and ## to curly brackets
-            data = data.replace('##', '}').replace('#', '{')
+                '''
+                # swap # and ## to curly brackets
+                data = data.replace('##', '}').replace('#', '{')
 
-            # format json
-            try:
-                data = json.loads(data)
-            except json.JSONDecodeError as e:
-                print("Invalid JSON:", e)
-                raise
-            data = json.dumps(data, indent=2)
+                # format json
+                try:
+                    data = json.loads(data)
+                except json.JSONDecodeError as e:
+                    print("Invalid JSON:", e)
+                    raise
+                data = json.dumps(data, indent=2)
 
-            print(data, end='\n\n')
-            f.write(data)
+                print(data, end='\n\n')
+                f.write(data)
     print(f'All data saved in {filepath}')

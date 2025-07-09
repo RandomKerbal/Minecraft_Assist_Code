@@ -1,18 +1,17 @@
 import json
-variants = ('oak', 'spruce', 'birch', 'jungle', 'acacia', 'dark_oak', 'mangrove', 'cherry', 'pale_oak', 'bamboo', 'crimson', 'warped', 'nether_brick')
-fire_immune = ('crimson', 'warped', 'nether_brick')
+variants = ('cobblestone', 'mossy_cobblestone', 'stonebrick', 'mossy_stonebrick', 'andesite', 'diorite', 'granite', 'sandstone', 'red_sandstone', 'brick', 'prismarine', 'nether_brick', 'red_nether_brick', 'end_bricks', 'blackstone', 'polished_blackstone', 'polished_blackstone_bricks', 'cobbled_deepslate', 'polished_deepslate', 'deepslate_bricks', 'deepslate_tiles', 'mud_bricks')
 
 if __name__ == "__main__":
     for var in variants:
-        filepath = 'D:\\My Downloads\\dfence_bp\\'
-        filename = f'dfence_{var}.json'
+        filepath = 'D:\\My Downloads\\dwall_bp\\'
+        filename = f'dwall_{var}.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
   "format_version":"1.13.0",
   "minecraft:entity":#
      "description":#
-        "identifier":"rk:dfence_{var}",
+        "identifier":"rk:dwall_{var}",
         "is_spawnable":true,
         "is_summonable":true,
         "is_experimental":false,
@@ -51,7 +50,7 @@ if __name__ == "__main__":
         ##,
         "pick_up":#
            "minecraft:transformation":#
-              "into":"rk:dfence_{var}<despawn>",
+              "into":"rk:dwall_{var}<despawn>",
               "delay":#
                  "value":0.2
               ##
@@ -67,7 +66,7 @@ if __name__ == "__main__":
                     "max_wait_time":0,
                     "min_wait_time":0,
                     "num_to_spawn":1,
-                    "spawn_item":"rk:dfence_{var}_spawn_egg",
+                    "spawn_item":"rk:dwall_{var}_spawn_egg",
                     "single_use":true
                  ##
               ]
@@ -83,7 +82,7 @@ if __name__ == "__main__":
         "minecraft:type_family":#
            "family":[
               "inanimate",
-              "dfence"
+              "dwall"
            ]
         ##,
         "minecraft:health":#
@@ -152,12 +151,6 @@ if __name__ == "__main__":
                 ##,
                 "damage_modifier": -9999
               ##,
-              {'''
-              #
-                "cause":"temperature",
-                "deals_damage":true
-              ##,
-              ''' if var not in fire_immune else ''}
               #
                 "cause":"fire",
                 "deals_damage":false
@@ -168,34 +161,6 @@ if __name__ == "__main__":
               ##
            ]
         ##,
-        {'''
-        "minecraft:hurt_on_condition":#
-           "damage_conditions":[
-              #
-                 "filters":#
-                    "any_of":[
-                       #
-                          "test":"in_block",
-                          "subject":"self",
-                          "value":"minecraft:fire"
-                       ##
-                    ]
-                 ##,
-                 "cause":"temperature",
-                 "damage_per_tick":1
-              ##,
-              #
-                 "filters":#
-                      "test":"in_lava",
-                      "subject":"self",
-                      "value":true
-                 ##,
-                 "cause":"temperature",
-                 "damage_per_tick":4
-              ##
-           ]
-        ##,
-        ''' if var not in fire_immune else ''}
         "minecraft:collision_box":#
             "height":0.0,
             "width":0.0
