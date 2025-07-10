@@ -1,5 +1,5 @@
 import json
-variants = ('cobblestone', 'mossy_cobblestone', 'stonebrick', 'mossy_stonebrick', 'andesite', 'diorite', 'granite', 'sandstone', 'red_sandstone', 'brick', 'prismarine', 'nether_brick', 'red_nether_brick', 'end_bricks', 'blackstone', 'polished_blackstone', 'polished_blackstone_bricks', 'cobbled_deepslate', 'polished_deepslate', 'deepslate_bricks', 'deepslate_tiles', 'mud_bricks')
+variants = ('cobblestone', 'mossy_cobblestone', 'stonebrick', 'mossy_stonebrick', 'andesite', 'diorite', 'granite', 'sandstone', 'red_sandstone', 'brick', 'prismarine', 'nether_brick', 'red_nether_brick', 'end_stone_brick', 'blackstone', 'polished_blackstone', 'polished_blackstone_brick', 'cobbled_deepslate', 'polished_deepslate', 'deepslate_brick', 'deepslate_tile', 'mud_brick')
 
 if __name__ == "__main__":
     for var in variants:

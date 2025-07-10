@@ -17,7 +17,11 @@ if __name__ == "__main__":
       "identifier":"rk:{var}_break_particle",
       "basic_render_parameters":#
         "material":"particles_alpha",
-        "texture":"textures/blocks/{'deepslate/' if 'deepslate' in var else ''}{textures[var] if var in textures else var}"
+        "texture":"textures/blocks/{'deepslate/' if 'deepslate' in var else ''}{
+            textures[var] if var in textures else
+            var + 's' if (var[-6:] == '_brick' or var[-4:] == 'tile') and ('nether' not in var) else
+            var
+            }"
       ##
     ##,
     "components":#

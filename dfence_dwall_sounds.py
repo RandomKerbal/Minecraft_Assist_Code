@@ -11,8 +11,8 @@ sounds_hurt = {
     'red_nether_brick': 'nether_brick',
     'cobbled_deepslate': 'deepslate',
     'polished_deepslate': 'deepslate',
-    'deepslate_bricks': 'deepslate_bricks',
-    'deepslate_tiles': 'deepslate_bricks'
+    'deepslate_brick': 'deepslate_bricks',
+    'deepslate_tile': 'deepslate_bricks'
 }
 
 if __name__ == "__main__":
@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
         # dwall sounds
         for var in dwall_variants:
-            sound_hurt = f"{'block.mud_bricks.hit' if var == 'mud_bricks' else 'hit.' + (sounds_hurt[var] if var in sounds_hurt else 'stone')}"
+            sound_hurt = f"{'block.mud_bricks.hit' if var == 'mud_brick' else 'hit.' + (sounds_hurt[var] if var in sounds_hurt else 'stone')}"
             data += f'"rk:dwall_{var}":#"volume":1.0,"pitch":[0.8,1.2],"events":#"hurt":"{sound_hurt}","hurt.in.water":#"sound":"{sound_hurt}","volume":0.8,"pitch":[0.4,0.8]##,"death":""####,'
 
         data = data[:-1]  # removes comma at the end

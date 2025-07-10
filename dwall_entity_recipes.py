@@ -1,11 +1,13 @@
 import json
 from dwall_entity_bp import variants
+
 metadata = {
     'mossy_stonebrick': 'stonebrick:1',
     'andesite': 'stone:5',
     'diorite': 'stone:3',
     'granite': 'stone:1',
-    'brick': 'brick_block'
+    'brick': 'brick_block',
+    'end_stone_brick': 'end_bricks'
 }
 
 if __name__ == "__main__":
@@ -29,7 +31,11 @@ if __name__ == "__main__":
     ],
     "key":#
       "S":#
-        "item":"minecraft:{metadata[var] if var in metadata else var}"
+        "item":"minecraft:{
+            metadata[var] if var in metadata else
+            var + 's' if (var[-6:] == '_brick' or var[-4:] == 'tile') and ('nether' not in var) else
+            var
+            }"
       ##
     ##,
     "result":#

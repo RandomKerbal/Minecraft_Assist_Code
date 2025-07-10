@@ -9,23 +9,24 @@ textures = {
     'granite': 'stone_granite',
     'sandstone': 'sandstone_normal',
     'red_sandstone': 'red_sandstone_normal',
-    'prismarine': 'prismarine_rough'
+    'prismarine': 'prismarine_rough',
+    'end_stone_brick': 'end_bricks'
 }
 sounds_spawn = {
     'nether_brick': 'dig.nether_brick',
     'cobbled_deepslate': 'place.deepslate',
-    'deepslate_bricks': 'place.deepslate_bricks',
+    'deepslate_brick': 'place.deepslate_bricks',
     'polished_deepslate': 'place.deepslate',
     'deepslate_tiles': 'place.deepslate_bricks',
-    'mud_bricks': 'block.mud_bricks.place'
+    'mud_brick': 'block.mud_bricks.place'
 }
 sounds_despawn = {
     'nether_brick': 'dig.nether_brick',
     'cobbled_deepslate': 'dig.deepslate',
-    'deepslate_bricks': 'dig.deepslate_bricks',
+    'deepslate_brick': 'dig.deepslate_bricks',
     'polished_deepslate': 'dig.deepslate',
     'deepslate_tiles': 'dig.deepslate_bricks',
-    'mud_bricks': 'block.mud_bricks.break'
+    'mud_brick': 'block.mud_bricks.break'
 }
 
 if __name__ == "__main__":
@@ -43,7 +44,11 @@ if __name__ == "__main__":
         "default":"entity_alphablend"
       ##,
       "textures":#
-        "default":"textures/blocks/{'deepslate/' if 'deepslate' in var else ''}{textures[var] if var in textures else var}",
+        "default":"textures/blocks/{'deepslate/' if 'deepslate' in var else ''}{
+            textures[var] if var in textures else
+            var + 's' if (var[-6:] == '_brick' or var[-4:] == 'tile') and ('nether' not in var) else
+            var
+            }",
         "hitbox":"textures/particle/particles"
       ##,
       "geometry":#
