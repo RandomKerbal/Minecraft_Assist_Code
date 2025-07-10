@@ -1,11 +1,10 @@
 import json
-from dfence_entity_bp import variants as dfence_vars
 from dwall_entity_bp import variants as dwall_variants
 from dwall_entity_rp import textures
 
 if __name__ == "__main__":
     for var in dwall_variants:
-        if var not in dfence_vars:
+        if var != 'nether_brick':
             filepath = 'D:\\My Downloads\\dwall_particles\\'
             filename = f'{var}_break.particle.json'
             with open(f'{filepath}{filename}', 'w') as f:

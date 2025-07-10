@@ -9,8 +9,8 @@ variants = {
 '''
 Data Structure:
 
-    ┗ shapes (dfence, dwall,...)
-        ┗ variants (oak, cobblestone,...)
+shapes (dfence, dwall,...)
+    ┗ variants (oak, cobblestone,...)
 '''
 
 # generate english name for dfence and dwall variants
@@ -38,13 +38,13 @@ langs = {
 '''
 Data Structure:
 
-    ┗ langs (en_US, zh_CN,...)
-        ┗ shapes (dfence, dwall,...)
-            ┗ names (Oak Diagonal Fence, Cobblestone Diagonal Wall,...)
+langs (en_US, zh_CN,...)
+    ┗ shapes (dfence, dwall,...)
+        ┗ names (Oak Diagonal Fence, Cobblestone Diagonal Wall,...)
 '''
-pprint(langs)
 
 if __name__ == "__main__":
+    pprint(langs)
     for lang, shapes in langs.items():
         filepath = 'D:\\My Downloads\\dfence_dwall_texts\\'
 
