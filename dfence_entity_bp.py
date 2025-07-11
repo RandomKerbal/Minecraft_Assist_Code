@@ -29,12 +29,20 @@ if __name__ == "__main__":
         "horizontal":#
            "minecraft:variant":#
               "value":0
-           ##
+           ##,
+           "minecraft:physics":#
+              "has_collision":false,
+              "has_gravity":false
+            ##
         ##,
         "vertical":#
            "minecraft:variant":#
               "value":1
-           ##
+           ##,
+           "minecraft:physics":#
+              "has_collision":false,
+              "has_gravity":false
+            ##
         ##,
         "pre_pick_up":#
           "minecraft:spell_effects":#
@@ -214,7 +222,7 @@ if __name__ == "__main__":
           ]
         ##,
         "minecraft:physics":#
-           "has_collision":false,
+           "has_collision":true,
            "has_gravity":false
         ##,
         "minecraft:pushable":#
