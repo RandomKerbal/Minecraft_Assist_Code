@@ -1,4 +1,4 @@
-condition = 'math.mod(math.floor(query.time_stamp/300),21)'
+condition = f'math.mod(math.floor((query.time_stamp+{round(300/4)})/300),22)'
 frame_to_ind = {
     0: 0,
     1: 1,
@@ -19,7 +19,7 @@ frame_to_ind = {
     16: 3,
     17: 2,
     18: 0,
-    19: 1,
+    19: 3,
     20: 1,
     21: 3
 }
