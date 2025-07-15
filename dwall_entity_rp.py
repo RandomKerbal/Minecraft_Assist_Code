@@ -41,7 +41,7 @@ if __name__ == "__main__":
     "description":#
       "identifier":"rk:dwall_{var}",
       "materials":#
-        "default":"entity_alphablend"
+        "default":"{'player_spectator' if var == 'prismarine' else 'entity_alphablend'}"
       ##,
       "textures":#
         "default":"textures/blocks/{'deepslate/' if 'deepslate' in var else ''}{
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         "despawn":"{sounds_despawn[var] if var in sounds_despawn else 'dig.stone'}"
       ##,
       "render_controllers":[
-        "controller.render.{'dfence_anim4' if var == 'prismarine' else 'dfence'}",
+        "controller.render.{'dwall_prismarine' if var == 'prismarine' else 'dfence'}",
         "controller.render.dfence.hitbox"
       ]
     ##

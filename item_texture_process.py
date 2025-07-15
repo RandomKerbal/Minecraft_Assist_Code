@@ -26,8 +26,8 @@ def resize_png_images(input_path, size=(360, 360)):
 
                 save_path = input_path / file_path.name
                 img_opaque.save(save_path)
-                print(f"Resized and removed alpha: {save_path}")
+                print(f"Resized and removed translucency: {save_path}")
 
 
 if __name__ == "__main__":
-    resize_png_images('D:\\My Downloads\\dfence_items_texture')
+    resize_png_images('D:\\My Downloads\\dwall_item_textures')

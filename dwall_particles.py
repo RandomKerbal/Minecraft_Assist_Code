@@ -57,7 +57,7 @@ if __name__ == "__main__":
         "facing_camera_mode":"lookat_xyz",
         "uv":#
           "texture_width":16,
-          "texture_height":16,
+          "texture_height":{'64' if var == 'prismarine' else '16'},
           "uv":[
             "math.round(variable.particle_random_1*6.5 + variable.particle_random_2*6.5)",
             "math.round(variable.particle_random_1*6.5 + variable.particle_random_2*6.5)"
