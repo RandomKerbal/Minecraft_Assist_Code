@@ -26,7 +26,7 @@ frame_to_ind = {
 bracket_count = 0
 output = ''
 
-for frame in range(21):  # up to 20 because last frame (frame 21) expression is different - doesn't need condition.
+for frame in range(21):  # up to frame 20 because frame 21 expression is different - doesn't need condition.
     output += f'{condition} == {frame} ? {frame_to_ind[frame]}/4 : ('
     bracket_count += 1
 
