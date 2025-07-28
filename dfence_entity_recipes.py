@@ -4,7 +4,7 @@ from dfence_entity_bp import variants
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dfence_recipes\\'
-        filename = f'dfence_{var}.rec.json'
+        filename = f'dfence.{var}.rec.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #

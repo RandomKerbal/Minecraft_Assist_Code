@@ -5,7 +5,7 @@ fire_immune = ('crimson', 'warped', 'nether_brick')
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dfence_bp\\'
-        filename = f'dfence_{var}.json'
+        filename = f'dfence.{var}.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #

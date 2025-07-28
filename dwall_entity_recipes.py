@@ -13,7 +13,7 @@ metadata = {
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dwall_recipes\\'
-        filename = f'dwall_{var}.rec.json'
+        filename = f'dwall.{var}.rec.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #

@@ -32,7 +32,7 @@ sounds_despawn = {
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dwall_rp\\'
-        filename = f'dwall_{var}.json'
+        filename = f'dwall.{var}.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #

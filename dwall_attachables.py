@@ -5,7 +5,7 @@ from dwall_entity_rp import textures
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dwall_attachables\\'
-        filename = f'dwall_{var}.atc.json'
+        filename = f'dwall.{var}.atc.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #

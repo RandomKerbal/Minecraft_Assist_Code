@@ -4,7 +4,7 @@ variants = ('cobblestone', 'mossy_cobblestone', 'stonebrick', 'mossy_stonebrick'
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dwall_bp\\'
-        filename = f'dwall_{var}.json'
+        filename = f'dwall.{var}.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #

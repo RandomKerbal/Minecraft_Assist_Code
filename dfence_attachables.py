@@ -5,7 +5,7 @@ from dfence_entity_rp import textures
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dfence_attachables\\'
-        filename = f'dfence_{var}.atc.json'
+        filename = f'dfence.{var}.atc.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #

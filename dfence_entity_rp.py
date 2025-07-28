@@ -27,7 +27,7 @@ sounds_despawn = {
 if __name__ == "__main__":
     for var in variants:
         filepath = 'D:\\My Downloads\\dfence_rp\\'
-        filename = f'dfence_{var}.json'
+        filename = f'dfence.{var}.json'
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
