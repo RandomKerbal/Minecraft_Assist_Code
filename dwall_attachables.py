@@ -18,7 +18,7 @@ if __name__ == "__main__":
         "enchanted":"entity_alphatest_glint"
       ##,
       "textures":#
-        "default":"textures/blocks/{'deepslate/' if 'deepslate' in var else ''}{
+        "default":"textures/{'items' if var == 'prismarine' else 'blocks'}/{'deepslate/' if 'deepslate' in var else ''}{
             textures[var] if var in textures else
             var + 's' if (var[-6:] == '_brick' or var[-4:] == 'tile') and ('nether' not in var) else
             var
@@ -39,8 +39,8 @@ if __name__ == "__main__":
         ]
       ##,
       "animations":#
-        "hold_first_person":"animation.dfence.egg.hold_first_person",
-        "hold_third_person":"animation.dfence.egg.hold_third_person"
+        "hold_first_person":"animation.dwall.egg.hold_first_person",
+        "hold_third_person":"animation.dwall.egg.hold_third_person"
       ##,
       "render_controllers":[
         "controller.render.item_default"
