@@ -3,18 +3,22 @@ import json
 dimensions = {
     'full': ('', '', '', ''),
     'half_top': ('', '/2', '', ''),
-    'half_bottom': ('', '/2', '', '+query.surface_particle_texture_size.v/2'),
+    'half_bottom': ('', '/2', '', '+v.texture_sz.v/2'),
     'half_left': ('/2', '', '', ''),
-    'half_right': ('/2', '', '+query.surface_particle_texture_size.u/2', ''),
-    'quad1': ('/2', '/2', '+query.surface_particle_texture_size.u/2', ''),
+    'half_right': ('/2', '', '+v.texture_sz.u/2', ''),
+    'quad1': ('/2', '/2', '+v.texture_sz.u/2', ''),
     'quad2': ('/2', '/2', '', ''),
-    'quad3': ('/2', '/2', '', '+query.surface_particle_texture_size.v/2'),
-    'quad4': ('/2', '/2', '+query.surface_particle_texture_size.u/2', '+query.surface_particle_texture_size.v/2'),
-    'quad': ('/2', '/2', '+query.surface_particle_texture_size.u/16*4', '+query.surface_particle_texture_size.v/16*4'),
-    'semiquad': ('/4', '/4', '+query.surface_particle_texture_size.u/16*6', '+query.surface_particle_texture_size.v/16*6'),
+    'quad3': ('/2', '/2', '', '+v.texture_sz.v/2'),
+    'quad4': ('/2', '/2', '+v.texture_sz.u/2', '+v.texture_sz.v/2'),
+    'quad': ('/2', '/2', '+v.texture_sz.u/16*4', '+v.texture_sz.v/16*4'),
+    'quad_bottom': ('/2', '/2', '+v.texture_sz.u/16*4', '+v.texture_sz.v/2'),
+    'semiquad': ('/4', '/4', '+v.texture_sz.u/16*6', '+v.texture_sz.v/16*6'),
+    'semiquad_left': ('/4', '/4', '', '+v.texture_sz.v/2'),
+    'semiquad_right': ('/4', '/4', '+v.texture_sz.u/16*12', '+v.texture_sz.v/2'),
     '4pix': ('/4', '', '', ''),
+    '4pix_bottom': ('', '/4', '', '+v.texture_sz.v/16*12'),
     '3pix': ('', '/16*3', '', ''),
-    '2pix': ('/8', '', '+query.surface_particle_texture_size.u/16*7', ''),
+    '2pix': ('/8', '', '+v.texture_sz.u/16*7', ''),
 }
 """
 key = name of dimension
@@ -24,9 +28,9 @@ val = tuple(
     
     y scale factor, given that a full block scale = 1,
     
-    x offset, given that a full block offset = query.surface_particle_texture_size.u,
+    x offset, given that a full block offset = v.texture_sz.u,
     
-    y offset, given that a full block offset = query.surface_particle_texture_size.v
+    y offset, given that a full block offset = v.texture_sz.v
 )
 """
 
@@ -37,44 +41,42 @@ if __name__ == "__main__":
         with open(f'{filepath}{filename}', 'w') as f:
             data = f'''
 #
-	"format_version": "1.10.0",
+	"format_version":"1.10.0",
 	"particle_effect":#
 		"description":#
-			"identifier": "rk:copycat_{name}",
+			"identifier":"rk:copycat_{name}",
 			"basic_render_parameters":#
-				"material": "particles_blend_culling",
-				"texture": "atlas.terrain"
+				"material":"particles_blend_culling",
+				"texture":"atlas.terrain"
 			##
 		##,
 		"components":#
 			"minecraft:emitter_local_space":#
-				"position": true,
-				"rotation": true
+				"position":true,
+				"rotation":true
 			##,
 			"minecraft:emitter_rate_instant":#
-				"num_particles": 1
+				"num_particles":1
 			##,
 			"minecraft:emitter_lifetime_once":#
 			##,
 			"minecraft:emitter_shape_point":#
 			##,
 			"minecraft:particle_lifetime_expression":#
+				"expiration_expression":"q.is_owner_identifier_any('minecraft:shulker') && q.variant != 16"
 			##,
 			"minecraft:particle_appearance_billboard":#
-				"size": ["0.5{x_scale}", "0.5{y_scale}"],
-				"facing_camera_mode": "emitter_transform_xz",
+				"size":["0.5{x_scale}", "0.5{y_scale}"],
+				"facing_camera_mode":"emitter_transform_xz",
 				"uv":#
-					"texture_width": 1,
-					"texture_height": 1,
-					"uv": ["query.surface_particle_texture_coordinate.u{x_offset}", "query.surface_particle_texture_coordinate.v{y_offset}"],
-					"uv_size": ["query.surface_particle_texture_size.u{x_scale}", "query.surface_particle_texture_size.v{y_scale}"]
+					"texture_width":1,
+					"texture_height":1,
+					"uv":["v.texture_coord.u{x_offset}", "v.texture_coord.v{y_offset}"],
+					"uv_size":["v.texture_sz.u{x_scale}", "v.texture_sz.v{y_scale}"]
 				##
 			##,
 			"minecraft:particle_appearance_lighting":#
-			##,
-            "minecraft:particle_appearance_tinting":#
-              "color": ["Math.clamp(query.surface_particle_color.r, 0, 1)", "Math.clamp(query.surface_particle_color.g, 0, 1)", "Math.clamp(query.surface_particle_color.b, 0, 1)", "Math.clamp(query.surface_particle_color.a, 0, 1)"]
-            ##
+			##
 		##
 	##
 ##
