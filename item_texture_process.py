@@ -1,5 +1,5 @@
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 def resize_png_images(input_path, size=(360, 360)):
@@ -9,7 +9,14 @@ def resize_png_images(input_path, size=(360, 360)):
         if file_path.is_file() and file_path.suffix.lower() == '.png':
             with Image.open(file_path) as img:
 
-                # resize image
+                # resize canvas to a square, centering the original and filling with transparency
+                img = ImageOps.pad(
+                    img,
+                    (max_l := max(img.size), max_l),
+                    color=(0, 0, 0, 0),  # transparent fill
+                    centering=(0.5, 0.5)  # middle of both axes
+                )
+                # rescale to 360*360
                 img_resized = img.resize(size, Image.LANCZOS)
 
                 # remove alpha translucency

@@ -58,7 +58,8 @@ if __name__ == "__main__":
 			"minecraft:emitter_rate_instant":#
 				"num_particles":1
 			##,
-			"minecraft:emitter_lifetime_once":#
+			"minecraft:emitter_lifetime_expression":#
+				"expiration_expression": "q.is_owner_identifier_any('minecraft:shulker') && q.variant != 16"
 			##,
 			"minecraft:emitter_shape_point":#
 			##,
@@ -75,8 +76,14 @@ if __name__ == "__main__":
 					"uv_size":["v.texture_sz.u{x_scale}", "v.texture_sz.v{y_scale}"]
 				##
 			##,
-			"minecraft:particle_appearance_lighting":#
-			##
+            "minecraft:particle_appearance_tinting":#
+              "color": [
+                "v.tint",
+                "v.tint",
+                "v.tint",
+                0
+              ]
+            ##
 		##
 	##
 ##

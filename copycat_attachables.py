@@ -13,11 +13,11 @@ if __name__ == "__main__":
     "description":#
       "identifier":"rk:copycat_{shape}_spawn_egg",
       "materials":#
-        "default":"entity",
+        "default":"entity_alphatest",
         "enchanted":"entity_alphatest_glint"
       ##,
       "textures":#
-        "default":"textures/items/copycat",
+        "default":"textures/items/copycat/blank",
         "enchanted":"textures/misc/enchanted_item_glint" 
       ##,
       "geometry":#
