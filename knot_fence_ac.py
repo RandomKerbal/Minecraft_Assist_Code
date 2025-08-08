@@ -13,8 +13,7 @@ if __name__ == "__main__":
             remove = 'add'
             NOT = ''
 
-        print()
-        output = '"/execute at @s'
+        output = '\n"/execute'
 
         for var in variants[:-1]:
             output += f' unless block {adj} {var}'
@@ -22,5 +21,5 @@ if __name__ == "__main__":
         output += f' run tag @s {add} {tag}",'
         print(output)
 
-        print(f'"/execute at @s if block {adj} {variants[-1]} run tag @s {remove} {tag}",')
+        print(f'"/execute if block {adj} {variants[-1]} run tag @s {remove} {tag}",')
         print(f'"/tp @s[tag={NOT}{tag}] {adj} 0 0",')

@@ -59,12 +59,12 @@ if __name__ == "__main__":
 				"num_particles":1
 			##,
 			"minecraft:emitter_lifetime_expression":#
-				"expiration_expression": "q.is_owner_identifier_any('minecraft:shulker') && q.variant != 16"
+				"expiration_expression": "q.is_owner_identifier_any('minecraft:shulker')*(q.variant != 16)"
 			##,
 			"minecraft:emitter_shape_point":#
 			##,
 			"minecraft:particle_lifetime_expression":#
-				"expiration_expression":"q.is_owner_identifier_any('minecraft:shulker') && q.variant != 16"
+				"expiration_expression":"q.is_owner_identifier_any('minecraft:shulker')*(q.variant != 16)"
 			##,
 			"minecraft:particle_appearance_billboard":#
 				"size":["0.5{x_scale}", "0.5{y_scale}"],
