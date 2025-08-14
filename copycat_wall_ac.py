@@ -140,7 +140,7 @@ dirs_per_connType = (
 )
 
 if __name__ == "__main__":
-    def _1d_to_2d(_1d: str, ax: int) -> str:
+    def _1d_to_2d(_1d: int, ax: int) -> str:
         """
         Converts a 1D direction vector to 2D based on given axis.
         """
@@ -151,16 +151,16 @@ if __name__ == "__main__":
         elif ax == 'z':
             return f'^^^{_1d}'
 
-    def recur(layer: Literal['x', 'y', 'z'], connType_prev: int = None, output: str = 'execute ') -> None:
+    def recur_block(layer: Literal['x', 'y', 'z'], connType_prev: int = None, output: str = 'execute ') -> None:
         """
         :param layer:
         Must be 'x', 'y', or 'z'.
         Has 2 purposes:
-            1. Indicates which layer of the tree we are in. 'z' and 'y' indicates the first layer, while 'x' indicates the second layer.
+            1. Indicates which layer of the tree we are in. 'z' or 'y' indicates layer 0, while 'x' indicates layer 1.
             2. Indicates the axis that the generated Minecraft commands will check.
         :param connType_prev:
             Stands for: Connection Type on the Previous axis.
-            Store the type of connection (see documentation on dirs_per_connType) on the axis used in the previous iteration. Note: Invalid when layer == 'z' or 'y'.
+            Store the type of connection (must be 0, 1, 2, 3 - see documentation on dirs_per_connType) on the axis used in the previous iteration. Note: Invalid when layer == 'z' or 'y'.
         :param output: Minecraft command to print
         """
 
@@ -171,13 +171,31 @@ if __name__ == "__main__":
                 for block in noConn_blocks:
                     output2 += f'unless block {_1d_to_2d(dir, layer)} {block} '
 
-            if layer == 'z':
-                recur('x', connType, output2)
+            if layer != 'x':
+                recur_block('x', connType, output2)
 
-            elif layer == 'y':
-                recur('x', connType, output2)
+            else:
+                if connType_prev == connType == 0:
+                    continue  # we don't want "/execute run event entity @s conn_x0z0"
 
-            else:   # layer == 'x'
+                else:
+                    print(output2 + f'run event entity @s conn_yz{connType_prev}x{connType}')
+
+    def recur_entity(layer: Literal['x', 'y', 'z'], connType_prev: int = None, output: str = 'execute ') -> None:
+        """
+        See documentation on recur_block.
+        """
+
+        for connType, dirs in enumerate(dirs_per_connType):
+            output2 = output
+
+            for dir in dirs:
+                output2 += f'positioned {_1d_to_2d(dir, layer)} if entity @e[r=0.01, c=1, type=rk:copycat_wall] '
+
+            if layer != 'x':
+                recur_entity('x', connType, output2)
+
+            else:
                 if connType_prev == connType == 0:
                     continue  # we don't want "/execute run event entity @s conn_x0z0"
 
@@ -185,7 +203,13 @@ if __name__ == "__main__":
                     print(output2 + f'run event entity @s conn_yz{connType_prev}x{connType}')
 
 
-    print('zx')
-    recur('z')
-    print('\nyx')
-    recur('y')
+    print('# zx block')
+    recur_block('z')
+    print('\n# zx entity')
+    recur_entity('z')
+    print('\n# event add variant, set rotation, add hitbox\nevent entity @s is_standing0')
+
+    print('\n# yx block')
+    recur_block('y')
+    print('\n# yx entity')
+    recur_entity('y')
