@@ -254,7 +254,28 @@ if __name__ == "__main__":
         outputs_newl('e')
         recur('e', ax)
         for armNum, output in enumerate(outputs):
-            armNum += 1
-            print(f"# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane{output}")
+            armNum += 1  # armNum starts from 1, not 0
 
-    print('# event add variant, set rotation, add hitbox\nevent entity @s is_standing0\n')  # only for ax == 'z'
+            filepath = f'D:\\My Downloads\\set_wallArm\\{ax}x\\'
+            filename = f'{armNum if armNum < 3 else "3or4"}.mcfunction'
+
+            with open(f'{filepath}{filename}', 'r+') as f:
+                data = f"# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane{output}"
+                print(data)
+
+                if armNum == 4:
+                    data_prev = f.read()  # read existing content
+                    f.seek(0)  # go to start
+                    f.truncate()  # remove everything after current position (start) -> clears file
+                    data = data_prev + data  # write new content
+
+                if armNum == 3:
+                    data += '\n'
+                else:
+                    data = data[:-1]  # removes \n at the end
+
+                f.write(data)
+                f.flush()
+
+    # print('# event add variant, set rotation, add hitbox\nevent entity @s is_standing0\n')  # only for ax == 'z'
+    print(f'All data saved in {filepath}')
