@@ -1,6 +1,111 @@
-from typing import Literal
+armType: int
+"""
+Must be 0, 1, 2, 3. An armType means how a wall is connected to adjacent blocks:
 
-noConn_blocks = (
+armType0 = [ air ] [wall] [ air ]
+
+armType1 = [block] [wall] [ air ]
+
+armType2 = [block] [wall] [block]
+
+armType3 = [ air ] [wall] [block]
+"""
+
+
+def _1d_to_2d(_1d: int, ax: int) -> str:
+    """
+    Converts a 1D direction vector into 2D based on given axis.
+    """
+    if ax == 'x':
+        return f'^{_1d}^^'
+    elif ax == 'y':
+        return f'^^{_1d}^'
+    elif ax == 'z':
+        return f'^^^{_1d}'
+
+
+def armCount(armType_prev: int, armType: int) -> int:
+    """
+    Step 1: converts the type of arm (must be 0, 1, 2, 3 - see documentation on armType) on each axis into the number of arms.
+    Examples:
+        - armType = 1 -> 1 arm
+        - armType = 2 -> 2 arms
+        - armType = 3 -> 1 arm
+    Step 2: total the number of arms on both axes.
+    """
+    armType_prev = armType_prev if armType_prev != 3 else 1
+    armType = armType if armType != 3 else 1
+
+    return armType_prev + armType
+
+
+def recur(b_or_e: str, ax: str, armType_prev: int = None, output_prev: str = 'execute ') -> None:
+    """
+    :param b_or_e:
+    Must be 'b' or 'e'.
+
+    'b':
+        Stands for: "block".
+        Generate Minecraft commands that check for adjacent blocks.
+    'e':
+        Stands for: "entity".
+        Generate Minecraft commands that check for adjacent copycat wall entities.
+
+    :param ax:
+    Must be 'x', 'y', or 'z'.
+
+    Has 2 purposes:
+        1. Indicates the axis that the generated Minecraft commands will check.
+        2. Indicates which layer of the tree we are in. 'z' or 'y' indicates layer 0, while 'x' indicates layer 1.
+
+    :param armType_prev:
+        Stands for: Arm Type on the Previous axis.
+        Store the type of arm (must be 0, 1, 2, 3 - see documentation on armType) on the axis in the previous iteration. Note: Invalid when layer == 'z' or 'y'.
+
+    :param output_prev: Minecraft commands generated with the axis in the previous iteration
+    """
+
+    for armType, dirs in enumerate(dirs_per_armType):
+        output = output_prev
+
+        if b_or_e == 'b':
+            for dir in dirs:
+                for block in noArm_blocks:
+                    output += f'unless block {_1d_to_2d(dir, ax)} {block} '
+
+        elif b_or_e == 'e':
+            for dir in dirs:
+                output += f'positioned {_1d_to_2d(dir, ax)} if entity @e[r=0.01, c=1, type=rk:copycat_wall] '
+
+        if ax != 'x':
+            recur(b_or_e, 'x', armType, output)
+
+        else:
+            if armType_prev == armType == 0:
+                continue  # we don't want "/execute run event entity @s arm_x0z0"
+
+            else:
+                outputs[armCount(armType_prev, armType)-1] += (output + f'run event entity @s arm_yz{armType_prev}x{armType}\n')
+
+
+def outputs_reset() -> None:
+    global outputs
+    outputs = ["", "", "", ""]
+    """
+    index = total number of arms; value = generated Minecraft commands
+    """
+    outputs_newl('b')
+    return
+
+
+def outputs_newl(b_or_e: str) -> None:
+    global outputs
+    for i in range(len(outputs)):
+        outputs[i] += f'\n# {"block" if b_or_e == 'b' else "entity"}\n'
+    return
+
+
+noArm_blocks = (
     'activator_rail',
     'air',
     'amethyst_cluster',
@@ -131,8 +236,10 @@ noConn_blocks = (
     'wither_rose',
     'wooden_slab'
 )
-dirs_per_connType = (
-    # direction(s) to check for a wall that is connected to...
+noArm_blocks = ('_',)
+
+dirs_per_armType = (
+    # index = armType (see documentation on armType); value = direction(s) to check with the specified armType.
     (),             # neither positive nor negative side
     ('1',),         # positive side
     ('1', '-1'),    # both positive side & negative side
@@ -140,76 +247,14 @@ dirs_per_connType = (
 )
 
 if __name__ == "__main__":
-    def _1d_to_2d(_1d: int, ax: int) -> str:
-        """
-        Converts a 1D direction vector to 2D based on given axis.
-        """
-        if ax == 'x':
-            return f'^{_1d}^^'
-        elif ax == 'y':
-            return f'^^{_1d}^'
-        elif ax == 'z':
-            return f'^^^{_1d}'
 
-    def recur_block(layer: Literal['x', 'y', 'z'], connType_prev: int = None, output: str = 'execute ') -> None:
-        """
-        :param layer:
-        Must be 'x', 'y', or 'z'.
-        Has 2 purposes:
-            1. Indicates which layer of the tree we are in. 'z' or 'y' indicates layer 0, while 'x' indicates layer 1.
-            2. Indicates the axis that the generated Minecraft commands will check.
-        :param connType_prev:
-            Stands for: Connection Type on the Previous axis.
-            Store the type of connection (must be 0, 1, 2, 3 - see documentation on dirs_per_connType) on the axis used in the previous iteration. Note: Invalid when layer == 'z' or 'y'.
-        :param output: Minecraft command to print
-        """
+    for ax in ('y', 'z'):
+        outputs_reset()
+        recur('b', ax)
+        outputs_newl('e')
+        recur('e', ax)
+        for armNum, output in enumerate(outputs):
+            armNum += 1
+            print(f"# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane{output}")
 
-        for connType, dirs in enumerate(dirs_per_connType):
-            output2 = output
-
-            for dir in dirs:
-                for block in noConn_blocks:
-                    output2 += f'unless block {_1d_to_2d(dir, layer)} {block} '
-
-            if layer != 'x':
-                recur_block('x', connType, output2)
-
-            else:
-                if connType_prev == connType == 0:
-                    continue  # we don't want "/execute run event entity @s conn_x0z0"
-
-                else:
-                    print(output2 + f'run event entity @s conn_yz{connType_prev}x{connType}')
-
-    def recur_entity(layer: Literal['x', 'y', 'z'], connType_prev: int = None, output: str = 'execute ') -> None:
-        """
-        See documentation on recur_block.
-        """
-
-        for connType, dirs in enumerate(dirs_per_connType):
-            output2 = output
-
-            for dir in dirs:
-                output2 += f'positioned {_1d_to_2d(dir, layer)} if entity @e[r=0.01, c=1, type=rk:copycat_wall] '
-
-            if layer != 'x':
-                recur_entity('x', connType, output2)
-
-            else:
-                if connType_prev == connType == 0:
-                    continue  # we don't want "/execute run event entity @s conn_x0z0"
-
-                else:
-                    print(output2 + f'run event entity @s conn_yz{connType_prev}x{connType}')
-
-
-    print('# zx block')
-    recur_block('z')
-    print('\n# zx entity')
-    recur_entity('z')
-    print('\n# event add variant, set rotation, add hitbox\nevent entity @s is_standing0')
-
-    print('\n# yx block')
-    recur_block('y')
-    print('\n# yx entity')
-    recur_entity('y')
+    print('# event add variant, set rotation, add hitbox\nevent entity @s is_standing0\n')  # only for ax == 'z'
