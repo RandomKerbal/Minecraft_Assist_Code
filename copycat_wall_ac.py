@@ -12,14 +12,18 @@ armType3 = [ air ] [wall] [block]
 """
 
 
-def _1d_to_2d(_1d: int, ax: int) -> str:
+def inv_sign(_1d: int) -> str:
+    return '+' if _1d < 0 else '-' if _1d > 0 else ''
+
+
+def _1d_to_2d(_1d: int, ax: str) -> str:
     """
     Converts a 1D direction vector into 2D based on given axis.
     """
     if ax == 'x':
         return f'^{_1d}^^'
     elif ax == 'y':
-        return f'^^{_1d}^'
+        return f'~~{_1d}~'
     elif ax == 'z':
         return f'^^^{_1d}'
 
@@ -75,34 +79,44 @@ def recur(b_or_e: str, ax: str, armType_prev: int = None, output_prev: str = 'ex
 
         elif b_or_e == 'e':
             for dir in dirs:
-                output += f'positioned {_1d_to_2d(dir, ax)} if entity @e[r=0.01, c=1, type=rk:copycat_wall] '
+                output += f'at @s positioned {_1d_to_2d(dir, ax)} if entity @e[r=0.01, c=1, family={inv_sign(dir) + 'y_' if ax == 'y' else ''}wall_conn] '  # at @s resets the execute position to center
 
         if ax != 'x':
             recur(b_or_e, 'x', armType, output)
 
-        else:
-            if armType_prev == armType == 0:
-                continue  # we don't want "/execute run event entity @s arm_x0z0"
+        elif (_armCount := armCount(armType_prev, armType)) > 0:
+            outputs[_armCount] += (output + f'run event entity @s arm_yz{armType_prev}x{armType}\n')\
 
-            else:
-                outputs[armCount(armType_prev, armType)-1] += (output + f'run event entity @s arm_yz{armType_prev}x{armType}\n')
+        elif b_or_e == 'b':  # and armCount == 0
+            outputs[_armCount] += "event entity @s arm_yz0x0\n"
 
 
 def outputs_reset() -> None:
     global outputs
-    outputs = ["", "", "", ""]
+    outputs = ["", "", "", "", ""]
     """
     index = total number of arms; value = generated Minecraft commands
     """
-    outputs_newl('b')
     return
 
 
 def outputs_newl(b_or_e: str) -> None:
+    """
+    Adds a new line starting with "# {b_or_e}", to each element after the first element in variable outputs.
+    """
     global outputs
-    for i in range(len(outputs)):
-        outputs[i] += f'\n# {"block" if b_or_e == 'b' else "entity"}\n'
+    for i in range(1, len(outputs)):
+        outputs[i] += f'# {"block" if b_or_e == 'b' else "entity"}\n'
     return
+
+
+def filename(armNum: int) -> str:
+    if armNum in (0, 1):
+        return "0or1"
+    elif armNum in (3, 4):
+        return "3or4"
+    else:
+        return str(armNum)
 
 
 noArm_blocks = (
@@ -236,38 +250,39 @@ noArm_blocks = (
     'wither_rose',
     'wooden_slab'
 )
-noArm_blocks = ('_',)
+# noArm_blocks = ('_',)
 
 dirs_per_armType = (
     # index = armType (see documentation on armType); value = direction(s) to check with the specified armType.
-    (),             # neither positive nor negative side
-    ('1',),         # positive side
-    ('1', '-1'),    # both positive side & negative side
-    ('-1',)         # negative side
+    (),  # neither negative nor positive side
+    (-1,),  # negative side
+    (-1, 1),  # both negative side & positive side
+    (1,)  # positive side
 )
 
 if __name__ == "__main__":
+    filepath = f'D:\\My Downloads\\set_wallArm\\'
 
     for ax in ('y', 'z'):
         outputs_reset()
+        if ax == 'z':
+            outputs[4] = f"# set variant as standing\nevent entity @s is_standing0\n"
+        outputs_newl('b')
         recur('b', ax)
         outputs_newl('e')
         recur('e', ax)
+        outputs_rev = reversed(list(enumerate(outputs)))
 
-        outputs = iter(enumerate(outputs, start=1))
-        for armNum, output in outputs:
+        for armNum, output in outputs_rev:
+            data = f"# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane\n{output}"
 
-            filepath = f'D:\\My Downloads\\set_wallArm\\{ax}x\\'
-            filename = f'{armNum if armNum < 3 else "3or4"}.mcfunction'
+            if armNum in (4, 1):
+                armNum, output = next(outputs_rev)  # also act as keyword continue
+                data += f"\n# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane\n{output}"
 
-            with open(f'{filepath}{filename}', 'w') as f:
-                data = f"# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane{output}"
-                print(data)
+            print(data)
 
-                if armNum == 3:
-                    armNum, output = next(outputs)  # also act as break loop
-                    data += f"\n# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane{output}"
-
+            with open(f'{filepath}{ax}x\\{filename(armNum)}.mcfunction', 'w') as f:
                 data = data[:-1]  # removes \n at the end
                 f.write(data)
 
