@@ -91,9 +91,15 @@ def recur(b_or_e: str, ax: str, armType_prev: int = None, output_prev: str = 'ex
             outputs[_armCount] += "event entity @s arm_yz0x0\n"
 
 
-def outputs_reset() -> None:
+def outputs_reset(ax: str) -> None:
+    """
+    Overwrites each element in the list outputs with "# check if {index} arm(s) in {ax}x plane".
+    """
     global outputs
-    outputs = ["", "", "", "", ""]
+    outputs = [
+        f"# check if {armNum} arm{'s' * (armNum != 1)} in {ax}x plane\n"
+        for armNum in range(5)
+    ]
     """
     index = total number of arms; value = generated Minecraft commands
     """
@@ -102,7 +108,7 @@ def outputs_reset() -> None:
 
 def outputs_newl(b_or_e: str) -> None:
     """
-    Adds a new line starting with "# {b_or_e}", to each element after the first element in variable outputs.
+    Adds a new line starting with "# {b_or_e}", to each element after the first element in the list outputs.
     """
     global outputs
     for i in range(1, len(outputs)):
@@ -264,21 +270,20 @@ if __name__ == "__main__":
     filepath = f'D:\\My Downloads\\set_wallArm\\'
 
     for ax in ('y', 'z'):
-        outputs_reset()
-        if ax == 'z':
-            outputs[4] = f"# set variant as standing\nevent entity @s is_standing0\n"
+        outputs_reset(ax)
         outputs_newl('b')
         recur('b', ax)
         outputs_newl('e')
         recur('e', ax)
-        outputs_rev = reversed(tuple(enumerate(outputs)))
+        _outputs = enumerate(outputs)
 
-        for armNum, output in outputs_rev:
-            data = f"# check if {armNum} arm{'s'*(armNum != 1)} in {ax}x plane\n{output}"
+        for armNum, data in _outputs:
+            if armNum == 3 and ax == 'z':
+                data = f"# set variant as standing\nevent entity @s is_standing0\n\n" + data
 
-            if armNum in (4, 1):
-                armNum, output = next(outputs_rev)  # also act as keyword continue
-                data += f"\n# check if {armNum} arm{'s'*(armNum != 1)} in {ax}x plane\n{output}"
+            if armNum in (0, 3):
+                data2 = next(_outputs)[1]  # next() also act as keyword continue
+                data += '\n' + data2
 
             print(data)
 
