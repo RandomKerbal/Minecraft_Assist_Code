@@ -282,8 +282,7 @@ if __name__ == "__main__":
                 data = f"# set variant as standing\nevent entity @s is_standing0\n\n" + data
 
             if armNum in (0, 3):
-                data2 = next(_outputs)[1]  # next() also act as keyword continue
-                data += '\n' + data2
+                data += '\n' + next(_outputs)[1]  # next() also act as keyword continue
 
             print(data)
 
