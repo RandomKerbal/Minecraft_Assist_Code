@@ -12,8 +12,8 @@ armType3 = [ air ] [wall] [block]
 """
 
 
-def inv_sign(_1d: int) -> str:
-    return '+' if _1d < 0 else '-' if _1d > 0 else ''
+def inv_sign(_1d: int) -> str | None:
+    return '+' if _1d < 0 else '-' if _1d > 0 else None
 
 
 def _1d_to_2d(_1d: int, ax: str) -> str:
@@ -271,14 +271,14 @@ if __name__ == "__main__":
         recur('b', ax)
         outputs_newl('e')
         recur('e', ax)
-        outputs_rev = reversed(list(enumerate(outputs)))
+        outputs_rev = reversed(tuple(enumerate(outputs)))
 
         for armNum, output in outputs_rev:
-            data = f"# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane\n{output}"
+            data = f"# check if {armNum} arm{'s'*(armNum != 1)} in {ax}x plane\n{output}"
 
             if armNum in (4, 1):
                 armNum, output = next(outputs_rev)  # also act as keyword continue
-                data += f"\n# check if {armNum} arm{'s' if armNum != 1 else ''} in {ax}x plane\n{output}"
+                data += f"\n# check if {armNum} arm{'s'*(armNum != 1)} in {ax}x plane\n{output}"
 
             print(data)
 
