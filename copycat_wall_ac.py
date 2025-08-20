@@ -12,8 +12,8 @@ armType3 = [ air ] [wall] [block]
 """
 
 
-def inv_sign(_1d: int) -> str | None:
-    return '+' if _1d < 0 else '-' if _1d > 0 else None
+def inv_sign(_1d: int) -> str:
+    return '+' if _1d < 0 else '-' if _1d > 0 else ''
 
 
 def _1d_to_2d(_1d: int, ax: str) -> str:
@@ -79,7 +79,7 @@ def recur(b_or_e: str, ax: str, armType_prev: int = None, output_prev: str = 'ex
 
         elif b_or_e == 'e':
             for dir in dirs:
-                output += f'at @s positioned {_1d_to_2d(dir, ax)} if entity @e[r=0.01, c=1, family={inv_sign(dir) + 'y_' if ax == 'y' else ''}wall_conn] '  # at @s resets the execute position to center
+                output += f'at @s positioned {_1d_to_2d(dir, ax)} if entity @e[r=0.01, c=1, family={'zx' if ax in ('z', 'x') else ax}_wallConn] '  # at @s resets the execute position to center
 
         if ax != 'x':
             recur(b_or_e, 'x', armType, output)
@@ -278,9 +278,13 @@ if __name__ == "__main__":
         _outputs = enumerate(outputs)
 
         for armNum, data in _outputs:
-            if armNum == 3 and ax == 'z':
-                data = f"# set variant as standing\nevent entity @s is_standing0\n\n" + data
+            if armNum == 3:
+                if ax == 'y':
+                    data = f"# set side variant\nexecute unless entity @s[rym=-135,ry=-45] unless entity @s[rym=45,ry=135] run event entity @s is_side0\nexecute unless entity @s[rym=135,ry=-135] unless entity @s[rym=-45,ry=45] run event entity @s is_side1\n\n" + data
+                elif ax == 'z':
+                    data = f"# set variant as standing\nevent entity @s is_standing0\n\n" + data
 
+            # merge commands checking armNum 0 with 1; 3 with 4
             if armNum in (0, 3):
                 data += '\n' + next(_outputs)[1]  # next() also act as keyword continue
 
