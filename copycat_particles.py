@@ -20,6 +20,7 @@ properties = {
     '4pix_bottom': ('', '/4', '', f'+v.texture_sz.v*{12 / 16}'),
     '3pix': (f'*{3 / 16}', '', f'+v.texture_sz.u*{13 / 16}', ''),
     '2pix': ('/8', '', f'+v.texture_sz.u*{7 / 16}', ''),
+    'dot': ('/8', '/8', f'+v.texture_sz.u*{7 / 16}', f'+v.texture_sz.u*{7 / 16}')
 }
 """
 key = name of particle

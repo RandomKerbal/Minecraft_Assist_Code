@@ -137,7 +137,7 @@ if __name__ == "__main__":
                   ##,
                   "event":"pick_up"
                 ##,
-                "damage_modifier": -9999
+                "damage_modifier": -999
               ##,
               #
                 "on_damage":#
@@ -158,7 +158,7 @@ if __name__ == "__main__":
                   ##,
                   "event":"pre_pick_up"
                 ##,
-                "damage_modifier": -9999
+                "damage_modifier": -999
               ##,
               {'''
               #
