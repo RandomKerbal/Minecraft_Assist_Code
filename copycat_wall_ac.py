@@ -16,11 +16,11 @@ def inv_sign(_1d: int) -> str:
     return '+' if _1d < 0 else '-' if _1d > 0 else ''
 
 
-def _1d_to_2d(_1d: int, ax: str) -> str:
+def _1d_to_2d(_1d: int, ax: str, is_x_layer: int | None) -> str:
     """
     Converts a 1D direction vector into 2D based on given axis.
     """
-    if ax == 'x':
+    if is_x_layer is not None:  # if yes is_x_layer
         return f'^{_1d}^^'
     elif ax == 'y':
         return f'~~{_1d}~'
@@ -43,28 +43,26 @@ def armCount(armType_prev: int, armType: int) -> int:
     return armType_prev + armType
 
 
-def recur(b_or_e: str, ax: str, armType_prev: int = None, output_prev: str = 'execute ') -> None:
+def recur(b_or_e: str, ax: str, armType_prev: int | None = None, output_prev: str = 'execute ') -> None:
     """
     :param b_or_e:
-    Must be 'b' or 'e'.
-
-    'b':
-        Stands for: "block".
-        Generate Minecraft commands that check for adjacent blocks.
-    'e':
-        Stands for: "entity".
-        Generate Minecraft commands that check for adjacent copycat wall entities.
+        Must be 'b' or 'e'.
+        'b':
+            Stands for: "block".
+            Generate Minecraft commands that check for adjacent blocks.
+        'e':
+            Stands for: "entity".
+            Generate Minecraft commands that check for adjacent copycat wall entities.
 
     :param ax:
-    Must be 'x', 'y', or 'z'.
-
-    Has 2 purposes:
-        1. Indicates the axis that the generated Minecraft commands will check.
-        2. Indicates which layer of the tree we are in. 'z' or 'y' indicates layer 0, while 'x' indicates layer 1.
+        Must be 'y' or 'z'.
+        Indicates the axis that the generated Minecraft commands will check in layer 1. 'ax2' is not required because the axis in layer 2 is always 'x'.
 
     :param armType_prev:
         Stands for: Arm Type on the Previous axis.
-        Store the type of arm (must be 0, 1, 2, 3 - see documentation on armType) on the axis in the previous iteration. Note: Invalid when layer == 'z' or 'y'.
+        Has 2 purposes:
+            1. Store the type of arm (must be 0, 1, 2, 3 - see documentation on armType) on the axis in the previous iteration.
+            2. Indicates the current layer of the tree. None indicates layer 0; !None indicates layer 1.
 
     :param output_prev: Minecraft commands generated with the axis in the previous iteration
     """
@@ -75,14 +73,14 @@ def recur(b_or_e: str, ax: str, armType_prev: int = None, output_prev: str = 'ex
         if b_or_e == 'b':
             for dir in dirs:
                 for block in noArm_blocks:
-                    output += f'unless block {_1d_to_2d(dir, ax)} {block} '
+                    output += f'unless block {_1d_to_2d(dir, ax, armType_prev)} {block} '
 
         elif b_or_e == 'e':
             for dir in dirs:
-                output += f'at @s positioned {_1d_to_2d(dir, ax)} if entity @e[r=0.01, c=1, family={'zx' if ax in ('z', 'x') else ax}_wallConn] '  # at @s resets the execute position to center
+                output += f'at @s positioned {_1d_to_2d(dir, ax, armType_prev)} if entity @e[r=0.01, c=1, family={'zx' if ax == 'z' else ax}_wallConn] '  # at @s resets the execute position to center
 
-        if ax != 'x':
-            recur(b_or_e, 'x', armType, output)
+        if armType_prev is None:
+            recur(b_or_e, ax, armType, output)
 
         elif (_armCount := armCount(armType_prev, armType)) > 0:
             outputs[_armCount] += (output + f'run event entity @s arm_yz{armType_prev}x{armType}\n')\
@@ -256,7 +254,7 @@ noArm_blocks = (
     'wither_rose',
     'wooden_slab'
 )
-# noArm_blocks = ('_',)
+noArm_blocks = ('_',)
 
 dirs_per_armType = (
     # index = armType (see documentation on armType); value = direction(s) to check with the specified armType.
